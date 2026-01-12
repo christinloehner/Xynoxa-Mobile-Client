@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "Xynoxa",
+    "slug": "xynoxa-mobile-client",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A0A0A"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "de.xynoxa.app",
+      "backgroundModes": ["fetch", "processing"],
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Xynoxa benoetigt Zugriff auf deine Fotos, um automatische Uploads auszuwaehlen.",
+        "NSPhotoLibraryAddUsageDescription": "Xynoxa benoetigt Zugriff, um Uploads aus deiner Galerie vorzunehmen."
+      }
+    },
+    "android": {
+      "package": "de.xynoxa.app",
+      "permissions": [
+        "READ_MEDIA_IMAGES",
+        "READ_MEDIA_VIDEO",
+        "READ_EXTERNAL_STORAGE",
+        "ACCESS_MEDIA_LOCATION",
+        "RECEIVE_BOOT_COMPLETED",
+        "WAKE_LOCK",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_DATA_SYNC",
+        "POST_NOTIFICATIONS"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0A0A0A"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 23,
+            "ndkVersion": "25.2.9519653"
+          }
+        }
+      ]
+    ]
+  }
+}

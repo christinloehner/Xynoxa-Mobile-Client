@@ -1,0 +1,42 @@
+node_modules/
+.expo/
+dist/
+build/
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Expo
+web-build/
+expo-env.d.ts
+
+# React Native
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android/app/*.keystore
+android/keystores.properties
+android/captures/
+
+ios/build/
+ios/Pods/
+ios/.xcworkspace/
+ios/*.xcworkspace
+ios/*.xcuserstate
+ios/*.xcuserdatad
+ios/*.xcodeproj/project.xcworkspace/
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/xcuserdata/
+ios/.idea/
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
