@@ -1,8 +1,17 @@
 # Xynoxa Mobile Client
 
-Mobile App fuer Android/iOS (Expo). Fokus:
-- Dateien anzeigen und verwalten (Download, Loeschen, Kopieren, Verschieben)
-- Automatischer Foto-Upload aus ausgewaehlten Alben mit Zielpfad
+Mobile app for Android/iOS (Expo). Focus:
+- View and manage files (download, delete, copy, move)
+- Automatic photo upload from selected albums with target path
+
+## Official Links
+
+This is the Xynoxa control center: website and all three repos bundled, so you can instantly find the right app.
+
+- Xynoxa Website: https://www.xynoxa.com
+- Xynoxa Cloud App: https://github.com/christinloehner/Xynoxa-Cloud
+- Xynoxa Desktop Client: https://github.com/christinloehner/Xynoxa-Desktop-Client
+- Xynoxa Mobile Client: https://github.com/christinloehner/Xynoxa-Mobile-Client
 
 ## ATTENTION  ATTENTION  ATTENTION  ATTENTION  ATTENTION 
 
@@ -18,49 +27,49 @@ npm run start
 ```
 
 ## Login
-Die App nutzt Login per E-Mail + Passwort. Beim ersten Login wird automatisch
-ein API-Token erzeugt und lokal gespeichert.
+The app uses login via email + password. On first login an API token is created
+and stored locally.
 
 ## Auto-Upload
-- Auto-Upload aktivieren
-- Album aktivieren
-- Zielpfad in der Cloud angeben (z.B. `Fotos/Urlaub`)
-- Optional: Gruppenordner, indem der Gruppenordner-Name am Anfang steht (z.B. `Team/Fotos`)
+- Enable auto-upload
+- Enable an album
+- Set a target path in the cloud (e.g. `Photos/Vacation`)
+- Optional: group folders by prefixing the group name (e.g. `Team/Photos`)
 
-Android: Es gibt einen nativen Hintergrund-Worker, der auch nach App-Schliessen
-und nach Reboot weiterlaeuft. Das Intervall ist systembedingt (min. 15 Minuten).
-iOS: Apple erlaubt keine permanenten Hintergrundprozesse; Uploads laufen ueber
-systemgesteuerte Background Tasks.
+Android: There is a native background worker that continues after the app is
+closed and after reboot. The interval is system-defined (min. 15 minutes).
+iOS: Apple does not allow permanent background processes; uploads run via
+system-managed background tasks.
 
-## Lokaler Build (Android APK)
+## Local Build (Android APK)
 
-### Voraussetzungen
-- Android Studio inkl. Android SDK + Platform Tools
-- `JAVA_HOME` gesetzt (JDK 17 empfohlen fuer RN 0.74)
-- `ANDROID_HOME` gesetzt (oder `ANDROID_SDK_ROOT`)
-- `adb` im PATH
+### Prerequisites
+- Android Studio incl. Android SDK + Platform Tools
+- `JAVA_HOME` set (JDK 17 recommended for RN 0.74)
+- `ANDROID_HOME` set (or `ANDROID_SDK_ROOT`)
+- `adb` in PATH
 
-Falls Gradle meckert: `android/local.properties` anlegen mit dem SDK-Pfad:
+If Gradle complains: create `android/local.properties` with the SDK path:
 ```
-sdk.dir=/pfad/zu/Android/Sdk
+sdk.dir=/path/to/Android/Sdk
 ```
 
-Wichtig fuer Builds:
-- NDK Version: `25.2.9519653`
+Important for builds:
+- NDK version: `25.2.9519653`
 - Min SDK: `23`
-Diese Werte muessen in `android/gradle.properties` stehen:
+These values must be set in `android/gradle.properties`:
 ```
 android.minSdkVersion=23
 android.ndkVersion=25.2.9519653
 ```
 
-Falls das NDK fehlt, in Android Studio ueber SDK Manager installieren
-oder via sdkmanager:
+If the NDK is missing, install it in Android Studio via SDK Manager
+or via sdkmanager:
 ```
 sdkmanager "ndk;25.2.9519653"
 ```
 
-### Schnellstart (Debug APK, lauffaehig ohne Keystore)
+### Quick start (debug APK, runnable without keystore)
 ```
 npm install
 npx expo prebuild --platform android
@@ -68,45 +77,45 @@ cat android/gradle.properties
 cd android
 ./gradlew assembleDebug
 ```
-APK Pfad:
+APK path:
 ```
 android/app/build/outputs/apk/debug/app-debug.apk
 ```
-Installieren:
+Install:
 ```
 adb install -r android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
-### 1) Abhaengigkeiten installieren
+### 1) Install dependencies
 ```
 npm install
 ```
 
-### 2) Native Projekte generieren
+### 2) Generate native projects
 ```
 npx expo prebuild --platform android
 ```
-Dadurch entsteht der `android/` Ordner mit Gradle-Projekt.
+This creates the `android/` folder with the Gradle project.
 
-### 3) Release-Keystore erzeugen
+### 3) Create release keystore
 ```
 keytool -genkeypair -v \
   -keystore android/app/xynoxa-release.keystore \
   -alias xynoxa \
   -keyalg RSA -keysize 2048 -validity 10000
 ```
-Merke dir Passwort + Alias.
+Remember password + alias.
 
-### 4) Keystore in Gradle eintragen
-Lege `android/keystores.properties` an:
+### 4) Add keystore to Gradle
+Create `android/keystores.properties`:
 ```
 MYAPP_UPLOAD_STORE_FILE=xynoxa-release.keystore
 MYAPP_UPLOAD_KEY_ALIAS=xynoxa
-MYAPP_UPLOAD_STORE_PASSWORD=DEIN_PASSWORT
-MYAPP_UPLOAD_KEY_PASSWORD=DEIN_PASSWORT
+MYAPP_UPLOAD_STORE_PASSWORD=YOUR_PASSWORD
+MYAPP_UPLOAD_KEY_PASSWORD=YOUR_PASSWORD
 ```
 
-Passe `android/app/build.gradle` an (falls Expo es nicht schon gesetzt hat):
+Update `android/app/build.gradle` (if Expo did not already set it):
 ```
 android {
   signingConfigs {
@@ -126,40 +135,40 @@ android {
   }
 }
 ```
-Und in `android/gradle.properties` die Properties laden:
+And load the properties in `android/gradle.properties`:
 ```
 MYAPP_UPLOAD_STORE_FILE=xynoxa-release.keystore
 MYAPP_UPLOAD_KEY_ALIAS=xynoxa
-MYAPP_UPLOAD_STORE_PASSWORD=DEIN_PASSWORT
-MYAPP_UPLOAD_KEY_PASSWORD=DEIN_PASSWORT
+MYAPP_UPLOAD_STORE_PASSWORD=YOUR_PASSWORD
+MYAPP_UPLOAD_KEY_PASSWORD=YOUR_PASSWORD
 ```
 
-### 5) Release APK bauen
+### 5) Build release APK
 ```
 cd android
 ./gradlew assembleRelease
 ```
-Die APK liegt dann hier:
+The APK will be here:
 ```
 android/app/build/outputs/apk/release/app-release.apk
 ```
 
-### 6) APK installieren (optional)
+### 6) Install APK (optional)
 ```
 adb install -r android/app/build/outputs/apk/release/app-release.apk
 ```
 
-## Lokaler Build (iOS)
+## Local Build (iOS)
 
-### Voraussetzungen
-- macOS mit Xcode
+### Prerequisites
+- macOS with Xcode
 - CocoaPods (`sudo gem install cocoapods`)
 
-### Schritte
+### Steps
 ```
 npm install
 npx expo prebuild --platform ios
 cd ios
 pod install
 ```
-Dann `ios/Xynoxa.xcworkspace` in Xcode oeffnen, Signing einstellen und Archive bauen.
+Then open `ios/Xynoxa.xcworkspace` in Xcode, set signing, and archive.
