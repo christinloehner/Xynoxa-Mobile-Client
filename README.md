@@ -4,6 +4,13 @@ Mobile App fuer Android/iOS (Expo). Fokus:
 - Dateien anzeigen und verwalten (Download, Loeschen, Kopieren, Verschieben)
 - Automatischer Foto-Upload aus ausgewaehlten Alben mit Zielpfad
 
+## ATTENTION  ATTENTION  ATTENTION  ATTENTION  ATTENTION 
+
+Warning! This application is still under development and definitely not recommended for daily use! Currently, it is only recommended to install the application for testing purposes and not to use it in production!
+
+**Warning! Expect data loss when testing this application!**
+
+
 ## Start
 ```
 npm install
